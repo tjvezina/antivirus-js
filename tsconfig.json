@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "module": "none",
+    "sourceMap": false,
+    "rootDir": "src",
+    "outFile": "./build/build.js",
+    "moduleResolution": "node",
+    "target": "ES2020"
+  }
+}
