@@ -1,12 +1,12 @@
-function windowResized() { // eslint-disable-line no-unused-vars
+globalThis.windowResized = function (): void {
   resizeCanvas(windowWidth, windowHeight);
-}
+};
 
-function setup() { // eslint-disable-line no-unused-vars
+globalThis.setup = function (): void {
   createCanvas(windowWidth, windowHeight);
   pixelDensity(1);
-}
+};
 
-function draw() { // eslint-disable-line no-unused-vars
-  background(42);
-}
+globalThis.draw = function (): void {
+  background('#281d3a');
+};
