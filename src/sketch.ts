@@ -1,5 +1,6 @@
 import Camera from './3d/camera.js';
 import Matrix from './3d/matrix.js';
+import { loadMesh } from './3d/mesh-loader.js';
 import Mesh from './3d/mesh.js';
 
 const score = 0;
@@ -16,10 +17,14 @@ let worldRot: number;
 let maxSpeed: number;
 let maxShipRot: number;
 
-let cube: Mesh;
+let ship: Mesh;
 
 globalThis.windowResized = function (): void {
   resizeCanvas(windowWidth, windowHeight);
+};
+
+globalThis.preload = function (): void {
+  loadMesh('Ship', color('#2552ccff'), (result: Mesh) => { ship = result; });
 };
 
 globalThis.setup = function (): void {
@@ -32,19 +37,16 @@ globalThis.setup = function (): void {
   worldRot = PI;
   maxSpeed = PI * 0.05;
   maxShipRot = PI/4;
-
-  cube = new Mesh(color('#d38929'));
-  cube.createCube();
 };
 
 globalThis.draw = function (): void {
   background('#281d3a');
 
-  cube.world = Matrix.createScale(5).mult(
-    Matrix.createRotationX(-0.25).mult(
+  ship.world = Matrix.createScale(5).mult(
+    Matrix.createRotationX(-0.5).mult(
       Matrix.createRotationY(millis()/1000 * TWO_PI / 8),
     ),
   );
-  cube.convert2D(gameCamera, width, height);
-  cube.draw(lightSource);
+  ship.convert2D(gameCamera, width, height);
+  ship.draw(lightSource);
 };

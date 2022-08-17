@@ -25,7 +25,7 @@ export function perspectiveProjection(vertex, camera, screenWidth, screenHeight)
 export function isFacingCamera(tri) {
     const a = createVector(tri[0].x - tri[1].x, tri[0].y - tri[1].y, 0);
     const b = createVector(tri[2].x - tri[1].x, tri[2].y - tri[1].y, 0);
-    return a.cross(b).z > 0;
+    return a.cross(b).z < 0;
 }
 export function getSurfaceNormal(verts) {
     const a = p5.Vector.sub(verts[0], verts[1]);

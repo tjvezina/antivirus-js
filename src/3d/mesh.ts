@@ -31,12 +31,12 @@ export default class Mesh {
 
     polygonList.length = 0;
     polygonList.push(...[
-      [0, 1, 3, 2],
-      [5, 4, 6, 7],
-      [1, 0, 4, 5],
-      [2, 3, 7, 6],
-      [0, 2, 6, 4],
-      [3, 1, 5, 7],
+      [0, 2, 3, 1],
+      [5, 7, 6, 4],
+      [1, 5, 4, 0],
+      [2, 6, 7, 3],
+      [0, 4, 6, 2],
+      [3, 7, 5, 1],
     ]);
   }
 
@@ -60,7 +60,6 @@ export default class Mesh {
       const verts = new Array<p5.Vector>(next.length);
 
       for (let point = 0; point < next.length; point++) {
-        // TODO: Why is the -1 necessary?
         pt[point] = pointList[next[point]];
         verts[point] = world.multVec(vertexList[next[point]]);
       }
