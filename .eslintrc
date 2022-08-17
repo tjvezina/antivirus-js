@@ -25,6 +25,7 @@
     "array-callback-return": "error",
     "quote-props": ["error", "consistent"],
     "space-infix-ops": "off",
+    "no-lone-blocks": "off",
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
       "objects": "always-multiline",
