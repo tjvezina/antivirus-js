@@ -40,6 +40,7 @@
       "asyncArrow": "always"
     }],
     "@typescript-eslint/ban-ts-comment": ["error", { "ts-nocheck": "allow-with-description" }],
+    "@typescript-eslint/no-unused-vars": "error",
     "@typescript-eslint/explicit-function-return-type": "error",
     "@typescript-eslint/member-delimiter-style": ["error", {
       "multiline": {
@@ -58,8 +59,7 @@
           }
         }
       }
-    }],
-    "@typescript-eslint/no-unused-vars": "off"
+    }]
   },
   "ignorePatterns": ["*.js"],
   "globals": {

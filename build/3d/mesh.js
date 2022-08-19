@@ -40,7 +40,7 @@ export default class Mesh {
         ]);
     }
     convert2D(camera) {
-        const { vertexList, pointList, world } = this;
+        const { vertexList, pointList } = this;
         pointList.length = 0;
         vertexList.forEach(vert => {
             pointList.push(perspectiveProjection(this.world.multVec(vert), camera));

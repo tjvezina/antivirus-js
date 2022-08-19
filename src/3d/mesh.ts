@@ -51,7 +51,7 @@ export default class Mesh {
   }
 
   convert2D(camera: Camera): void {
-    const { vertexList, pointList, world } = this;
+    const { vertexList, pointList } = this;
 
     pointList.length = 0;
 
