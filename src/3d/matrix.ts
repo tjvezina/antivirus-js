@@ -1,5 +1,14 @@
 export default class Matrix { // eslint-disable-line no-unused-vars
-  static createTranslation(v: p5.Vector): Matrix {
+  static createTranslation(v: p5.Vector): Matrix;
+  static createTranslation(x: number, y: number, z: number): Matrix;
+  static createTranslation(arg0: p5.Vector | number, y?: number, z?: number): Matrix {
+    let v: p5.Vector;
+    if (typeof arg0 === 'number') {
+      v = createVector(arg0, y, z);
+    } else {
+      v = arg0;
+    }
+
     const matrix = new Matrix();
 
     matrix.m[0][3] = v.x;
@@ -9,6 +18,8 @@ export default class Matrix { // eslint-disable-line no-unused-vars
     return matrix;
   }
 
+  static createScale(s: number): Matrix;
+  static createScale(sx: number, sy: number, sz: number): Matrix;
   static createScale(sx: number, sy?: number, sz?: number): Matrix {
     const matrix = new Matrix();
 
@@ -52,13 +63,14 @@ export default class Matrix { // eslint-disable-line no-unused-vars
     return matrix;
   }
 
-  static mult(m1: Matrix, m2: Matrix): Matrix {
-    const result = new Matrix(m1);
-    return result.mult(m2);
+  static mult(...args: Matrix[]): Matrix {
+    return args.slice(1).reduce((a, b) => a.mult(b), new Matrix(args[0]));
   }
 
   m = new Array(4).fill(undefined).map(() => new Array(4).fill(0));
 
+  constructor();
+  constructor(toCopy: Matrix);
   constructor(toCopy?: Matrix) {
     if (toCopy !== undefined) {
       this.copy(toCopy);
@@ -78,7 +90,7 @@ export default class Matrix { // eslint-disable-line no-unused-vars
   copy(m2: Matrix): void {
     for (let r = 0; r < 4; r++) {
       for (let c = 0; c < 4; c++) {
-        this.m[r][c] = m2[r][c];
+        this.m[r][c] = m2.m[r][c];
       }
     }
   }

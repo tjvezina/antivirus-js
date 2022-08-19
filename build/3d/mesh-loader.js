@@ -1,6 +1,6 @@
 import Mesh from './mesh.js';
 export function loadMesh(name, col, onComplete) {
-    loadStrings(`assets/models/${name}.obj`, (result) => {
+    loadStrings(`./assets/models/${name}.obj`, (result) => {
         const mesh = new Mesh(col);
         result.forEach(line => {
             if (line.length === 0) {

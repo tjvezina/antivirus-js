@@ -9,11 +9,21 @@ export default class Mesh {
   // Vertex index groups, which form the mesh's polygons
   polygonList: number[][] = [];
 
-  world: Matrix;
-  color: p5.Color;
+  world = new Matrix();
+  color = color(255);
 
-  constructor(color: p5.Color) {
-    this.color = color;
+  constructor(color: p5.Color);
+  constructor(toCopy: Mesh);
+  constructor(arg: p5.Color | Mesh) {
+    if (arg instanceof p5.Color) {
+      this.color = arg;
+    } else {
+      this.color = arg.color;
+      this.world = new Matrix(arg.world);
+      this.vertexList = arg.vertexList.map(vert => vert.copy());
+      this.pointList = arg.pointList.map(point => point.copy());
+      this.polygonList = arg.polygonList.map(polygon => [...polygon]);
+    }
   }
 
   createCube(): void {
@@ -40,13 +50,13 @@ export default class Mesh {
     ]);
   }
 
-  convert2D(camera: Camera, winWidth: number, winHeight: number): void {
+  convert2D(camera: Camera): void {
     const { vertexList, pointList, world } = this;
 
     pointList.length = 0;
 
     vertexList.forEach(vert => {
-      pointList.push(perspectiveProjection(this.world.multVec(vert), camera, winWidth, winHeight));
+      pointList.push(perspectiveProjection(this.world.multVec(vert), camera));
     });
   }
 
@@ -84,7 +94,7 @@ export default class Mesh {
 
         push();
         {
-          fill(col).noStroke();
+          fill(col).stroke(col).strokeWeight(1);
           beginShape();
           {
             pt.forEach(p => vertex(p.x, p.y));

@@ -1,11 +1,12 @@
+import { VIEW_HEIGHT, VIEW_WIDTH } from '../sketch.js';
 export default class Camera {
     constructor(pos, dir, fov, aspectRatio) {
         Object.assign(this, { pos, dir, fov, aspectRatio });
     }
 }
-export function perspectiveProjection(vertex, camera, screenWidth, screenHeight) {
+export function perspectiveProjection(vertex, camera) {
     if (vertex.z < camera.pos.z) {
-        return createVector(vertex.x / vertex.x * screenWidth + (screenWidth / 2), -(vertex.y / vertex.y * screenHeight) + (screenHeight / 2));
+        return createVector(vertex.x / vertex.x * VIEW_WIDTH + (VIEW_WIDTH / 2), -(vertex.y / vertex.y * VIEW_HEIGHT) + (VIEW_HEIGHT / 2));
     }
     const hyp = p5.Vector.sub(vertex, camera.pos);
     const angle = camera.dir.angleBetween(hyp);
@@ -15,11 +16,11 @@ export function perspectiveProjection(vertex, camera, screenWidth, screenHeight)
     dir.normalize();
     dir.mult(adj);
     const vPos = createVector(vertex.x - camera.pos.x + dir.x, vertex.y - camera.pos.y + dir.y);
-    const screenDiagonal = sqrt(screenWidth * screenWidth + screenHeight * screenHeight);
+    const screenDiagonal = sqrt(VIEW_WIDTH * VIEW_WIDTH + VIEW_HEIGHT * VIEW_HEIGHT);
     const scale = (screenDiagonal / 2) / midToCorner;
     vPos.mult(scale);
-    vPos.add(createVector(screenWidth / 2, screenHeight / 2));
-    vPos.y = screenHeight - vPos.y;
+    vPos.add(createVector(VIEW_WIDTH / 2, VIEW_HEIGHT / 2));
+    vPos.y = VIEW_HEIGHT - vPos.y;
     return vPos;
 }
 export function isFacingCamera(tri) {

@@ -1,3 +1,5 @@
+import { VIEW_HEIGHT, VIEW_WIDTH } from '../sketch.js';
+
 export default class Camera {
   pos: p5.Vector;
   dir: p5.Vector;
@@ -10,12 +12,12 @@ export default class Camera {
   }
 }
 
-export function perspectiveProjection(vertex: p5.Vector, camera: Camera, screenWidth: number, screenHeight: number): p5.Vector {
+export function perspectiveProjection(vertex: p5.Vector, camera: Camera): p5.Vector {
   // *** ONLY WORKS WITH FRON-FACING CAMERA AT (0, 0, x) *** //
   if (vertex.z < camera.pos.z) {
     return createVector(
-      vertex.x / vertex.x * screenWidth + (screenWidth / 2),
-      -(vertex.y / vertex.y * screenHeight) + (screenHeight / 2),
+      vertex.x / vertex.x * VIEW_WIDTH + (VIEW_WIDTH / 2),
+      -(vertex.y / vertex.y * VIEW_HEIGHT) + (VIEW_HEIGHT / 2),
     );
   }
   // *** ONLY WORKS WITH FRON-FACING CAMERA AT (0, 0, x) *** //
@@ -41,12 +43,12 @@ export function perspectiveProjection(vertex: p5.Vector, camera: Camera, screenW
     vertex.y - camera.pos.y + dir.y,
   );
 
-  const screenDiagonal = sqrt(screenWidth*screenWidth + screenHeight*screenHeight);
+  const screenDiagonal = sqrt(VIEW_WIDTH*VIEW_WIDTH + VIEW_HEIGHT*VIEW_HEIGHT);
   const scale = (screenDiagonal / 2) / midToCorner;
 
   vPos.mult(scale); // Scale from world size to screen size
-  vPos.add(createVector(screenWidth / 2, screenHeight / 2)); // Move origin to corner
-  vPos.y = screenHeight - vPos.y; // Invert Y to match screen coord system
+  vPos.add(createVector(VIEW_WIDTH / 2, VIEW_HEIGHT / 2)); // Move origin to corner
+  vPos.y = VIEW_HEIGHT - vPos.y; // Invert Y to match screen coord system
 
   return vPos; // HOLY CRAP, THAT'S IT! 3D point projected onto 2D screen!
 }

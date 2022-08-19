@@ -2,7 +2,8 @@
   "root": true,
   "parser": "@typescript-eslint/parser",
   "parserOptions": {
-    "ecmaVersion": 2020
+    "ecmaVersion": 2020,
+    "sourceType": "module"
   },
   "env": {
     "browser": true,
@@ -10,14 +11,13 @@
   },
   "plugins": [
     "standard",
-    "@typescript-eslint"
+    "@typescript-eslint",
+    "simple-import-sort"
   ],
   "extends": [
     "eslint:recommended",
     "standard",
-    "plugin:@typescript-eslint/recommended",
-    "p5js",
-    "p5js/sound"
+    "plugin:@typescript-eslint/recommended"
   ],
   "rules": {
     "indent": ["error", 2, { "SwitchCase": 1 }],
@@ -26,6 +26,7 @@
     "quote-props": ["error", "consistent"],
     "space-infix-ops": "off",
     "no-lone-blocks": "off",
+    "simple-import-sort/imports": "error",
     "comma-dangle": ["error", {
       "arrays": "always-multiline",
       "objects": "always-multiline",

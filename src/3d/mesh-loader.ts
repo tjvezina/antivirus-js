@@ -1,7 +1,7 @@
 import Mesh from './mesh.js';
 
 export function loadMesh(name: string, col: p5.Color, onComplete: (mesh: Mesh) => void): void {
-  loadStrings(`assets/models/${name}.obj`, (result: string[]) => {
+  loadStrings(`./assets/models/${name}.obj`, (result: string[]) => {
     const mesh = new Mesh(col);
 
     result.forEach(line => {

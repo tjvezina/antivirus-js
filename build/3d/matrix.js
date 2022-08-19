@@ -8,7 +8,14 @@ export default class Matrix {
             this.identity();
         }
     }
-    static createTranslation(v) {
+    static createTranslation(arg0, y, z) {
+        let v;
+        if (typeof arg0 === 'number') {
+            v = createVector(arg0, y, z);
+        }
+        else {
+            v = arg0;
+        }
         const matrix = new Matrix();
         matrix.m[0][3] = v.x;
         matrix.m[1][3] = v.y;
@@ -46,9 +53,8 @@ export default class Matrix {
         matrix.m[1][1] = cos(rad);
         return matrix;
     }
-    static mult(m1, m2) {
-        const result = new Matrix(m1);
-        return result.mult(m2);
+    static mult(...args) {
+        return args.slice(1).reduce((a, b) => a.mult(b), new Matrix(args[0]));
     }
     identity() {
         for (let r = 0; r < 4; r++) {
@@ -60,7 +66,7 @@ export default class Matrix {
     copy(m2) {
         for (let r = 0; r < 4; r++) {
             for (let c = 0; c < 4; c++) {
-                this.m[r][c] = m2[r][c];
+                this.m[r][c] = m2.m[r][c];
             }
         }
     }

@@ -1,10 +1,22 @@
 import { getSurfaceNormal, isFacingCamera, perspectiveProjection } from './camera.js';
+import Matrix from './matrix.js';
 export default class Mesh {
-    constructor(color) {
+    constructor(arg) {
         this.vertexList = [];
         this.pointList = [];
         this.polygonList = [];
-        this.color = color;
+        this.world = new Matrix();
+        this.color = color(255);
+        if (arg instanceof p5.Color) {
+            this.color = arg;
+        }
+        else {
+            this.color = arg.color;
+            this.world = new Matrix(arg.world);
+            this.vertexList = arg.vertexList.map(vert => vert.copy());
+            this.pointList = arg.pointList.map(point => point.copy());
+            this.polygonList = arg.polygonList.map(polygon => [...polygon]);
+        }
     }
     createCube() {
         const { vertexList, polygonList } = this;
@@ -27,11 +39,11 @@ export default class Mesh {
             [3, 7, 5, 1],
         ]);
     }
-    convert2D(camera, winWidth, winHeight) {
+    convert2D(camera) {
         const { vertexList, pointList, world } = this;
         pointList.length = 0;
         vertexList.forEach(vert => {
-            pointList.push(perspectiveProjection(this.world.multVec(vert), camera, winWidth, winHeight));
+            pointList.push(perspectiveProjection(this.world.multVec(vert), camera));
         });
     }
     draw(lightSource) {
@@ -55,7 +67,7 @@ export default class Mesh {
                 }
                 push();
                 {
-                    fill(col).noStroke();
+                    fill(col).stroke(col).strokeWeight(1);
                     beginShape();
                     {
                         pt.forEach(p => vertex(p.x, p.y));
